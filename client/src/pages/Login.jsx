@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  signInStart,
+  signInFailure,
+  signInSuccess,
+} from "../redux/user/userSlice.js";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({});
-  const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { error, errorMsg, loading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -15,8 +20,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      setError(false);
+      dispatch(signInStart());
       const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -28,17 +32,13 @@ const Login = () => {
       const data = await response.json();
 
       if (data.success === false) {
-        setError(true);
-        setErrorMsg(data.message);
-        setLoading(false);
+        dispatch(signInFailure(data.message));
       } else {
-        setLoading(false);
+        dispatch(signInSuccess(data));
         navigate("/");
       }
     } catch (err) {
-      setError(true);
-      setErrorMsg("Something went wrong!");
-      setLoading(false);
+      dispatch(signInFailure("Something went wrong! Please try again."));
     }
   };
 
