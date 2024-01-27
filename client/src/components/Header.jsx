@@ -4,13 +4,15 @@ const Header = () => {
   return (
     <header className="bg-slate-300">
       <nav className="flex justify-between max-w-4xl mx-auto p-3">
-        <h1 className="text-xl font-bold">Code x Auth</h1>
+        <h1 className="text-xl font-bold cursor-pointer">Code x Auth</h1>
         <ul className="flex gap-4">
           <li>
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `${isActive ? "text-red-400" : "text-black"}`
+                `${
+                  isActive ? "text-red-400 font-bold" : "text-black font-normal"
+                }`
               }
             >
               Home
@@ -20,7 +22,9 @@ const Header = () => {
             <NavLink
               to="/about"
               className={({ isActive }) =>
-                `${isActive ? "text-red-400" : "text-black"}`
+                `${
+                  isActive ? "text-red-400 font-bold" : "text-black font-normal"
+                }`
               }
             >
               About
@@ -30,7 +34,9 @@ const Header = () => {
             <NavLink
               to="/login"
               className={({ isActive }) =>
-                `${isActive ? "text-red-400" : "text-black"}`
+                `${
+                  isActive ? "text-red-400 font-bold" : "text-black font-normal"
+                }`
               }
             >
               Login

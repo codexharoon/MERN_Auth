@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [signUpData, setSignUpData] = useState({});
   const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setSignUpData({ ...signUpData, [e.target.id]: e.target.value });
@@ -27,12 +29,15 @@ const Signup = () => {
 
       if (data.success === false) {
         setError(true);
+        setErrorMsg(data.message);
         setLoading(false);
+      } else {
+        setLoading(false);
+        navigate("/login");
       }
-      setLoading(false);
     } catch (err) {
-      console.log(err);
       setError(true);
+      setErrorMsg("Something went wrong!");
       setLoading(false);
     }
   };
@@ -45,6 +50,7 @@ const Signup = () => {
           type="text"
           placeholder="Username"
           id="username"
+          required
           onChange={handleChange}
           className="p-3 bg-slate-100 rounded-lg"
         />
@@ -52,6 +58,7 @@ const Signup = () => {
           type="email"
           placeholder="Email"
           id="email"
+          required
           onChange={handleChange}
           className="p-3 bg-slate-100 rounded-lg"
         />
@@ -59,6 +66,7 @@ const Signup = () => {
           type="password"
           placeholder="Password"
           id="password"
+          required
           onChange={handleChange}
           className="p-3 bg-slate-100 rounded-lg"
         />
@@ -82,9 +90,7 @@ const Signup = () => {
         </p>
       </div>
 
-      <p className="text-red-700 mt-5">
-        {error ? "Something Went Wrong!" : ""}
-      </p>
+      <p className="text-red-700 mt-5">{error ? errorMsg : ""}</p>
     </div>
   );
 };
