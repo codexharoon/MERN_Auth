@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const { user } = useSelector((state) => state.user);
   return (
     <header className="bg-slate-300">
       <nav className="flex justify-between max-w-4xl mx-auto p-3">
@@ -31,16 +33,28 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                `${
-                  isActive ? "text-red-400 font-bold" : "text-black font-normal"
-                }`
-              }
-            >
-              Login
-            </NavLink>
+            {user ? (
+              <NavLink to="/profile">
+                <img
+                  src={user.photo}
+                  alt="user profile picture"
+                  className="h-7 w-7 rounded-full object-cover"
+                />
+              </NavLink>
+            ) : (
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  `${
+                    isActive
+                      ? "text-red-400 font-bold"
+                      : "text-black font-normal"
+                  }`
+                }
+              >
+                Login
+              </NavLink>
+            )}
           </li>
         </ul>
       </nav>
