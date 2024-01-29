@@ -56,10 +56,16 @@ export const login = async (req, res, next) => {
 
     const { password: hashedPassword, ...rest } = validUser._doc;
 
-    res.cookie("access_token", token, { httpOnly: true }).json({
-      message: "User logged in successfully",
-      ...rest,
-    });
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+      })
+      .json({
+        message: "User logged in successfully",
+        ...rest,
+      });
   } catch (error) {
     next(error);
   }
@@ -73,10 +79,16 @@ export const google = async (req, res, next) => {
     if (existingUser) {
       const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET);
       const { password, ...rest } = existingUser._doc;
-      res.cookie("access_token", token, { httpOnly: true }).json({
-        message: "User logged in successfully",
-        ...rest,
-      });
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        })
+        .json({
+          message: "User logged in successfully",
+          ...rest,
+        });
     } else {
       const randomPassword =
         Math.random().toString(36).slice(-8) +
@@ -103,10 +115,16 @@ export const google = async (req, res, next) => {
 
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
       const { password: hpass, ...rest } = newUser._doc;
-      res.cookie("access_token", token, { httpOnly: true }).json({
-        message: "User logged in successfully",
-        ...rest,
-      });
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        })
+        .json({
+          message: "User logged in successfully",
+          ...rest,
+        });
     }
   } catch (error) {
     next(error);
