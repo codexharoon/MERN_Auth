@@ -11,6 +11,9 @@ import {
   userUpdateFailure,
   userUpdateStart,
   userUpdateSuccess,
+  userDeleteStart,
+  userDeleteSuccess,
+  userDeleteFailure,
 } from "../redux/user/userSlice";
 
 const Profile = () => {
@@ -57,6 +60,34 @@ const Profile = () => {
       }
     } catch (error) {
       dispatch(userUpdateFailure(error.message));
+    }
+  };
+
+  const handleDelete = async () => {
+    const deleteConfirmation = confirm(
+      "Are you sure you want to delete your account?"
+    );
+    if (!deleteConfirmation) return;
+
+    try {
+      dispatch(userDeleteStart());
+
+      const response = await fetch(`/api/user/delete/${user._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      if (data.success === false) {
+        dispatch(userDeleteFailure(data.message));
+        return;
+      } else {
+        dispatch(userDeleteSuccess());
+      }
+    } catch (error) {
+      dispatch(userDeleteFailure(error.message));
     }
   };
 
@@ -160,7 +191,7 @@ const Profile = () => {
         {profileUpdateSuccess ? "Profile updated Successfully!" : ""}
       </p>
       <div className="flex justify-between mt-5 cursor-pointer font-semibold text-red-700">
-        <span>Delete Account</span>
+        <span onClick={handleDelete}>Delete Account</span>
         <span>Sign out</span>
       </div>
     </div>
