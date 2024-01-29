@@ -14,6 +14,7 @@ import {
   userDeleteStart,
   userDeleteSuccess,
   userDeleteFailure,
+  userLogout,
 } from "../redux/user/userSlice";
 
 const Profile = () => {
@@ -59,7 +60,7 @@ const Profile = () => {
         setProgress(0);
       }
     } catch (error) {
-      dispatch(userUpdateFailure(error.message));
+      dispatch(userUpdateFailure("Something went wrong! Please try again."));
     }
   };
 
@@ -87,7 +88,26 @@ const Profile = () => {
         dispatch(userDeleteSuccess());
       }
     } catch (error) {
-      dispatch(userDeleteFailure(error.message));
+      dispatch(userDeleteFailure("Something went wrong! Please try again."));
+    }
+  };
+
+  const handleLogout = async () => {
+    const logoutConfirmation = confirm("Are you sure you want to logout?");
+    if (!logoutConfirmation) return;
+
+    try {
+      const response = await fetch("/api/auth/logout", {
+        method: "GET",
+      });
+
+      const data = await response.json();
+      if (data.success === false) {
+      } else {
+        dispatch(userLogout());
+      }
+    } catch (error) {
+      alert("Something went wrong! Please try again.");
     }
   };
 
@@ -192,7 +212,7 @@ const Profile = () => {
       </p>
       <div className="flex justify-between mt-5 cursor-pointer font-semibold text-red-700">
         <span onClick={handleDelete}>Delete Account</span>
-        <span>Sign out</span>
+        <span onClick={handleLogout}>Sign out</span>
       </div>
     </div>
   );

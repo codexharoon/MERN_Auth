@@ -112,3 +112,13 @@ export const google = async (req, res, next) => {
     next(error);
   }
 };
+
+export const logout = async (req, res, next) => {
+  try {
+    res.clearCookie("access_token").json({
+      message: "User logged out successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
