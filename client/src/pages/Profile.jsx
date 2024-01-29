@@ -108,8 +108,8 @@ const Profile = () => {
       const response = await fetch(
         "https://codexauth.cyclic.app/api/auth/logout",
         {
-          credentials: "include",
           method: "GET",
+          credentials: "include",
         }
       );
 

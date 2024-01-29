@@ -25,8 +25,8 @@ const Login = () => {
       const response = await fetch(
         "https://codexauth.cyclic.app/api/auth/login",
         {
-          credentials: "include",
           method: "POST",
+          credentials: "include",
           headers: {
             "content-type": "application/json",
           },
