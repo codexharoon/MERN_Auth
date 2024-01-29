@@ -21,6 +21,7 @@ const Signup = () => {
       const response = await fetch(
         "https://codexauth.cyclic.app/api/auth/signup",
         {
+          credentials: "include",
           method: "POST",
           headers: {
             "content-type": "application/json",

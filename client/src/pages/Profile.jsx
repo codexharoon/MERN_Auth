@@ -43,6 +43,7 @@ const Profile = () => {
       const response = await fetch(
         `https://codexauth.cyclic.app/api/user/update/${user._id}`,
         {
+          credentials: "include",
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -79,6 +80,7 @@ const Profile = () => {
       const response = await fetch(
         `https://codexauth.cyclic.app/api/user/delete/${user._id}`,
         {
+          credentials: "include",
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -106,6 +108,7 @@ const Profile = () => {
       const response = await fetch(
         "https://codexauth.cyclic.app/api/auth/logout",
         {
+          credentials: "include",
           method: "GET",
         }
       );
