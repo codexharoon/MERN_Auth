@@ -40,13 +40,16 @@ const Profile = () => {
     try {
       dispatch(userUpdateStart());
 
-      const response = await fetch(`/api/user/update/${user._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(profileData),
-      });
+      const response = await fetch(
+        `https://codexauth.cyclic.app/api/user/update/${user._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(profileData),
+        }
+      );
 
       const data = await response.json();
       if (data.success === false) {
@@ -73,12 +76,15 @@ const Profile = () => {
     try {
       dispatch(userDeleteStart());
 
-      const response = await fetch(`/api/user/delete/${user._id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://codexauth.cyclic.app/api/user/delete/${user._id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const data = await response.json();
       if (data.success === false) {
@@ -97,9 +103,12 @@ const Profile = () => {
     if (!logoutConfirmation) return;
 
     try {
-      const response = await fetch("/api/auth/logout", {
-        method: "GET",
-      });
+      const response = await fetch(
+        "https://codexauth.cyclic.app/api/auth/logout",
+        {
+          method: "GET",
+        }
+      );
 
       const data = await response.json();
       if (data.success === false) {

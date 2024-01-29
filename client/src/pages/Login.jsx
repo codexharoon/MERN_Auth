@@ -22,13 +22,16 @@ const Login = () => {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(loginData),
-      });
+      const response = await fetch(
+        "https://codexauth.cyclic.app/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(loginData),
+        }
+      );
 
       const data = await response.json();
 

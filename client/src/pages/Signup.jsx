@@ -18,13 +18,16 @@ const Signup = () => {
     try {
       setLoading(true);
       setError(false);
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(signUpData),
-      });
+      const response = await fetch(
+        "https://codexauth.cyclic.app/api/auth/signup",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(signUpData),
+        }
+      );
 
       const data = await response.json();
 
