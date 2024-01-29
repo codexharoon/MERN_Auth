@@ -13,8 +13,8 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://auth.codexharoon.com",
   "https://codexharoon.com",
-  "https://codexauth.vercel.app/",
-  "https://codexauth.netlify.app/",
+  "https://codexauth.vercel.app",
+  "https://codexauth.netlify.app",
 ];
 app.use(
   cors({
