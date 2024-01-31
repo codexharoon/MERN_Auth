@@ -56,11 +56,13 @@ export const login = async (req, res, next) => {
 
     const { password: hashedPassword, ...rest } = validUser._doc;
 
+    const isSecure = req.secure || req.headers["x-forwarded-proto"] === "https";
+
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        sameSite: "none",
-        secure: true,
+        sameSite: isSecure ? "none" : "lax",
+        secure: isSecure,
       })
       .json({
         message: "User logged in successfully",
@@ -79,11 +81,15 @@ export const google = async (req, res, next) => {
     if (existingUser) {
       const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET);
       const { password, ...rest } = existingUser._doc;
+
+      const isSecure =
+        req.secure || req.headers["x-forwarded-proto"] === "https";
+
       res
         .cookie("access_token", token, {
           httpOnly: true,
-          sameSite: "none",
-          secure: true,
+          sameSite: isSecure ? "none" : "lax",
+          secure: isSecure,
         })
         .json({
           message: "User logged in successfully",
@@ -115,11 +121,15 @@ export const google = async (req, res, next) => {
 
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
       const { password: hpass, ...rest } = newUser._doc;
+
+      const isSecure =
+        req.secure || req.headers["x-forwarded-proto"] === "https";
+
       res
         .cookie("access_token", token, {
           httpOnly: true,
-          sameSite: "none",
-          secure: true,
+          sameSite: isSecure ? "none" : "lax",
+          secure: isSecure,
         })
         .json({
           message: "User logged in successfully",
